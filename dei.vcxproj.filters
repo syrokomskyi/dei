@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Файлы исходного кода">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Заголовочные файлы">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Заголовочные файлы\external">
+      <UniqueIdentifier>{4711b6c5-2a8c-4f50-a3e1-bbfef7946b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\external\plustache">
+      <UniqueIdentifier>{8f7f1fbc-e585-43c4-accf-6f4667a5eb2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\external">
+      <UniqueIdentifier>{e3bc2c5a-e205-4c95-9e7d-986f313cc884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\external\plustache">
+      <UniqueIdentifier>{3b1d8192-2c4a-4601-bc49-5e6fc9081c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\external\cajun">
+      <UniqueIdentifier>{a0a19f66-7d7a-4eae-972f-d352ababcb2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\external\markup">
+      <UniqueIdentifier>{a9d32f3e-b93b-4533-9d1a-0c8a0dbb5162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\external\markup">
+      <UniqueIdentifier>{ab561bae-0213-4015-8178-6e1cfc2751e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\external\cajun\json">
+      <UniqueIdentifier>{322e92a8-c413-41bb-a9cc-ec0963b98d1d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\configure.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Delivery.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stdafx.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Command.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="external\plustache\include\context.hpp">
+      <Filter>Заголовочные файлы\external\plustache</Filter>
+    </ClInclude>
+    <ClInclude Include="external\plustache\include\plustache_types.hpp">
+      <Filter>Заголовочные файлы\external\plustache</Filter>
+    </ClInclude>
+    <ClInclude Include="external\plustache\include\template.hpp">
+      <Filter>Заголовочные файлы\external\plustache</Filter>
+    </ClInclude>
+    <ClInclude Include="external\markup\Markup.h">
+      <Filter>Заголовочные файлы\external\markup</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Option.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Exception.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\dei.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Delivery.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdafx.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Command.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="external\plustache\src\context.cpp">
+      <Filter>Файлы исходного кода\external\plustache</Filter>
+    </ClCompile>
+    <ClCompile Include="external\plustache\src\main.cpp">
+      <Filter>Файлы исходного кода\external\plustache</Filter>
+    </ClCompile>
+    <ClCompile Include="external\plustache\src\template.cpp">
+      <Filter>Файлы исходного кода\external\plustache</Filter>
+    </ClCompile>
+    <ClCompile Include="external\markup\Markup.cpp">
+      <Filter>Файлы исходного кода\external\markup</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Option.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file>
+<auth>21555d6a3aadfaa0552d072de928dc9d</auth>
+<order
+order_id="9950"
+sender_city="Харків"
+sender_company="ПП Доценко"
+sender_address="1"
+sender_contact="Олексій"
+sender_phone="0504044040"
+rcpt_city_name="Кіровоград"
+rcpt_name="Приватна особа"
+rcpt_warehouse="2"
+rcpt_contact="Гранатова Ольга"
+rcpt_phone_num="0505421214"
+pack_type="Коробка"
+description="Взуття"
+pay_type="1"
+payer="1"
+cost="200"
+weight="1">
+<order_cont
+cont_description="Кільце" />
+</order>
+</file>
