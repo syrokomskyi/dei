@@ -46,7 +46,7 @@
       "redelivery_type": "2",
       "delivery_in_out": "",
       "redelivery_payment_city": "",
-      "redelivery_payment_payer": "",
+      "redelivery_payment_payer": "2",
 
       "weight": "",
       "length": "",

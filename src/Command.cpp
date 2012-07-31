@@ -597,7 +597,7 @@ std::ostream& std::operator<<( std::ostream& out, const dei::command::novaposhta
 
         // @todo fine Вынести в отдельный класс.
         if (itr == c.ld.cbegin()) {
-            // все элементы имеют одинаковую аутентификацию, одного достаточно
+            // все элементы требуют одинаковую аутентификацию, одного достаточно
             ctx.add( "oauth", d.oauth );
         }
 
@@ -711,12 +711,15 @@ std::ostream& std::operator<<( std::ostream& out, const dei::command::novaposhta
             // # сумма здесь всегда целая
             //ss << "Документы Ц1П " << d.totalClear;
             //ss << "Dokum C1P " << d.totalClear;
+            /* - Для типа "2" допустима только голая цифра. См. ниже.
             ss << "Док.ЦП " << d.totalClear;
+            */
+            ss << ( (d.redeliveryType == "2") ? "" : "Док.ЦП " ) << d.totalClear;
             order[ "delivery_in_out" ] = ss.str();
         }
 
         order[ "redelivery_payment_city" ] = d.city;
-        order[ "redelivery_payment_payer" ] = d.name;
+        order[ "redelivery_payment_payer" ] = d.redeliveryPaymentPayer;
 
         order[ "weight" ] = d.weight;
         order[ "length" ] = d.length;

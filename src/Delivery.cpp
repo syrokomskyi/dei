@@ -273,6 +273,8 @@ void dei::Delivery::initDefault( dei::Delivery* d, const std::string& initFile )
                                     d->redeliveryType = static_cast< json::String >( o.element ).Value();
                                 } else if (o.name == "delivery_in_out") {
                                     d->deliveryInOut = static_cast< json::String >( o.element ).Value();
+                                } else if (o.name == "redelivery_payment_payer") {
+                                    d->redeliveryPaymentPayer = static_cast< json::String >( o.element ).Value();
 
                                 } else if (o.name == "weight") {
                                     d->weight = static_cast< json::String >( o.element ).Value();
