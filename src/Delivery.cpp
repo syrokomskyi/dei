@@ -24,7 +24,11 @@ std::string dei::Delivery::typeDelivery() const {
 
 
 
-void dei::Delivery::load( listDeliveryPtr_t& r, const std::string& source ) {
+void dei::Delivery::load(
+    listDeliveryPtr_t& r,
+    const std::string& source,
+    const std::string& configure
+) {
 
     std::ifstream in( source.c_str() );
     if ( !in.is_open() ) {
@@ -96,7 +100,7 @@ void dei::Delivery::load( listDeliveryPtr_t& r, const std::string& source ) {
 
         // создаём доставку
         // доставка создаётся со значениями по умолчанию
-        DeliveryPtr d( new Delivery() );
+        DeliveryPtr d( new Delivery( configure ) );
         d->date = correctField( vec.at( 0 ) );
         d->number = correctField( vec.at( 1 ) );
         d->item = correctField( vec.at( 2 ) );
@@ -141,8 +145,9 @@ void dei::Delivery::load( listDeliveryPtr_t& r, const std::string& source ) {
 
 
 
-
-void dei::Delivery::initDefault( dei::Delivery* d, const std::string& initFile ) {
+void dei::Delivery::initDefault(
+    dei::Delivery* d, const std::string&  initFile
+) {
 
     // Инициируем некоторые значения полей по умолчанию (на случай, если в
     // файл конфигурации они не будут включены)
@@ -172,7 +177,7 @@ void dei::Delivery::initDefault( dei::Delivery* d, const std::string& initFile )
 
     } catch ( const ::json::Reader::ParseException& e ) {
         std::ostringstream ss;
-        ss << "Ошибка в структуре файла \"configure.json\".  "
+        ss << "Ошибка в структуре файла \"" << initFile << "\".  "
             << e.what()
             << " Line / offset: " << (e.m_locTokenBegin.m_nLine + 1)
             << '/' << (e.m_locTokenBegin.m_nLineOffset + 1);
@@ -273,6 +278,10 @@ void dei::Delivery::initDefault( dei::Delivery* d, const std::string& initFile )
                                     d->redeliveryType = static_cast< json::String >( o.element ).Value();
                                 } else if (o.name == "delivery_in_out") {
                                     d->deliveryInOut = static_cast< json::String >( o.element ).Value();
+
+                                } else if (o.name == "redelivery_payment_city") {
+                                    d->redeliveryPaymentCity = static_cast< json::String >( o.element ).Value();
+
                                 } else if (o.name == "redelivery_payment_payer") {
                                     d->redeliveryPaymentPayer = static_cast< json::String >( o.element ).Value();
 
@@ -308,7 +317,7 @@ void dei::Delivery::initDefault( dei::Delivery* d, const std::string& initFile )
                     const auto l = static_cast< json::Array >( o.element );
                     if ( l.Size() != 2 ) {
                         std::ostringstream ss;
-                        ss << "В файле \"configure.json\" для поля \"" << o.name << "\""
+                        ss << "В файле \"" << initFile << "\" для поля \"" << o.name << "\""
                            << " надо указать 2 параметра.";
                         throw Exception( ss.str() );
                     }

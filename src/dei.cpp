@@ -24,8 +24,10 @@ int main( int argc, char** argv ) {
 
     // Μενώ
     dc::listCommandPtr_t menu;
-    menu.push_back( dc::CommandPtr( new command::novaposhta::CreateTTN() ) );
-    menu.push_back( dc::CommandPtr( new command::novaposhta::FusionTTN() ) );
+    menu.push_back( dc::CommandPtr( new command::novaposhta::CreateTTN1() ) );
+    menu.push_back( dc::CommandPtr( new command::novaposhta::CreateTTN2() ) );
+    menu.push_back( dc::CommandPtr( new command::novaposhta::FusionTTN1()  ) );
+    menu.push_back( dc::CommandPtr( new command::novaposhta::FusionTTN2()  ) );
 
     static size_t rerun = 0;
     char ch = 0;

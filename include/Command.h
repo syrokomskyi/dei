@@ -70,16 +70,28 @@ protected:
 
 struct DeliveryCommand : public Command {
     /**
+    * Файл конфигурации.
+    */
+    const std::string configure;
+
+
+    /**
     * Входящие ТТН (готовы к отправке).
     */
     listDeliveryPtr_t ld;
 
     
-    inline DeliveryCommand() {
-    }
+    //inline DeliveryCommand() : configure( "" ) {
+    //}
 
 
-    inline DeliveryCommand( const listDeliveryPtr_t& ld ) : ld( ld ) {
+    inline DeliveryCommand(
+        const listDeliveryPtr_t& ld,
+        const std::string& configure
+    ) :
+        configure( configure ),
+        ld( ld )
+    {
     }
 
 };
@@ -97,21 +109,69 @@ namespace novaposhta {
 
 /**
 * Создание файла с готовой для импорта информацией о ТТН.
+* Используется указанная конфигурация.
 */
 struct CreateTTN : public DeliveryCommand {
 
-    inline CreateTTN() {
+    inline CreateTTN(
+        const std::string& configure
+    ) : DeliveryCommand( listDeliveryPtr_t(), configure ) {
     }
 
-    inline CreateTTN( const listDeliveryPtr_t& ld ) : DeliveryCommand( ld ) {
+    inline CreateTTN(
+        const listDeliveryPtr_t& ld,
+        const std::string& configure
+    ) : DeliveryCommand( ld, configure ) {
     }
 
 
     virtual void run();
 
 
+    /**
+    * Результат оформления ТТН.
+    */
+    struct Result {
+        DeliveryPtr d;
+        // Номер накладной в базе Новой почты.
+        std::string uid;
+    };
+    typedef std::vector< Result >  result_t;
+    
+    inline result_t const& result() const {
+        return mResult;
+    }
+
+
+
+protected:
+    result_t mResult;
+
+};
+
+
+
+
+
+
+/**
+* Создание файла с готовой для импорта информацией о ТТН.
+* Используется конфигурация из "1-configure.json".
+*/
+struct CreateTTN1 : public CreateTTN {
+
+    inline CreateTTN1(
+    ) : CreateTTN( "1-configure.json" ) {
+    }
+
+    inline CreateTTN1(
+        const listDeliveryPtr_t& ld
+    ) : CreateTTN( ld, "1-configure.json" ) {
+    }
+
+
     virtual inline std::string name() const {
-        return "Создать файл для импорта ТТН.";
+        return "Создать файл для импорта ТТН (наличные, платит получатель).";
     }
 
 
@@ -123,7 +183,8 @@ struct CreateTTN : public DeliveryCommand {
     virtual inline std::string confirmation() const {
         //@todo return "Оформить ТТН на сайте \"Новой почты\"? Данные будут взяты из файла."; - Объединить команды.
         std::ostringstream ss;
-        ss << "Подготовить файл с информацией для импорта на сайте \"Новой почты\"."
+        ss << "Подготовить файл с информацией для импорта на сайте \"Новой почты\""
+            << " (наличные, платит получатель)."
             << " Данные будут взяты из файла \"1.csv\""
             << " и записаны в файл \"b.xml\". Откройте последний файл, чтобы быстро импортировать"
             << " заявки в личном кабинете \"Новой почты\".";
@@ -142,35 +203,73 @@ struct CreateTTN : public DeliveryCommand {
         //return "Данные для импорта ТТН доступны в файле \"data/b.xml\". Откройте его и скопируйте в форму на сайте \"Новой почты\".";
         std::ostringstream ss;
         ss << "Получено заявок - " << ld.size() << "."
-           << " Данные для импорта ТТН доступны в файле \"data/b.xml\"."
+           << " Данные для импорта ТТН (наличные) доступны в файле \"data/b.xml\"."
            << " Откройте его и скопируйте в форму на сайте \"Новой почты\".";
         return ss.str();
     }
 
     
     virtual inline std::string failure() const {
-        return "Файл для импорта ТТН не создан.";
+        return "Файл для импорта ТТН (наличные) не создан.";
+    }
+
+};
+
+
+
+
+
+
+/**
+* Создание файла с готовой для импорта информацией о ТТН.
+* Используется конфигурация из "2-configure.json".
+*/
+struct CreateTTN2 : public CreateTTN {
+
+    inline CreateTTN2(
+    ) : CreateTTN( "2-configure.json" ) {
+    }
+
+    inline CreateTTN2(
+        const listDeliveryPtr_t& ld
+    ) : CreateTTN( ld, "2-configure.json" ) {
+    }
+
+
+    virtual inline std::string name() const {
+        return "Создать файл для импорта ТТН (безналичные, платит отправитель).";
+    }
+
+
+    virtual inline std::string hotkey() const {
+        return "2";
+    }
+
+
+    virtual inline std::string confirmation() const {
+        //@todo return "Оформить ТТН на сайте \"Новой почты\"? Данные будут взяты из файла."; - Объединить команды.
+        std::ostringstream ss;
+        ss << "Подготовить файл с информацией для импорта на сайте \"Новой почты\""
+            << " (безналичные, платит отправитель)."
+            << " Данные будут взяты из файла \"1.csv\""
+            << " и записаны в файл \"b.xml\". Откройте последний файл, чтобы быстро импортировать"
+            << " заявки в личном кабинете \"Новой почты\".";
+        return ss.str();
+    }
+
+
+    virtual inline std::string success() const {
+        std::ostringstream ss;
+        ss << "Получено заявок - " << ld.size() << "."
+           << " Данные для импорта ТТН (безналичные) доступны в файле \"data/b.xml\"."
+           << " Откройте его и скопируйте в форму на сайте \"Новой почты\".";
+        return ss.str();
     }
 
     
-    /**
-    * Результат оформления ТТН.
-    */
-    struct Result {
-        DeliveryPtr d;
-        // Номер накладной в базе Новой почты.
-        std::string uid;
-    };
-    typedef std::vector< Result >  result_t;
-    
-    inline result_t const& result() const {
-        return mResult;
+    virtual inline std::string failure() const {
+        return "Файл для импорта ТТН (безналичные) не создан.";
     }
-
-
-
-private:
-    result_t mResult;
 
 };
 
@@ -182,29 +281,53 @@ private:
 /**
 * Слияние файла с информацией о заявках и файла с номерами заявок
 * от "Новой почты".
+* Используется указанная конфигурация.
 */
 struct FusionTTN : public DeliveryCommand {
 
-    inline FusionTTN() {
+    inline FusionTTN(
+        const std::string& configure
+    ) : DeliveryCommand( listDeliveryPtr_t(), configure ) {
     }
 
 
     virtual void run();
 
 
+    friend Delivery;
+
+};
+
+
+
+
+/**
+* Слияние файла с информацией о заявках и файла с номерами заявок
+* от "Новой почты".
+* Используется конфигурация из "1-configure.json".
+*/
+struct FusionTTN1 : public FusionTTN {
+
+    // список заявок и конфигурация здесь не используются
+    inline FusionTTN1(
+    ) : FusionTTN( "1-configure.json" ) {
+    }
+
+
     virtual inline std::string name() const {
-        return "Создать файл для быстрой связи заявок \"Новой почты\" с заявками Системы.";
+        return "Создать файл для быстрой связи заявок (наличные, платит получатель).";
     }
 
 
     virtual inline std::string hotkey() const {
-        return "2";
+        return "3";
     }
 
 
     virtual inline std::string confirmation() const {
         std::ostringstream ss;
-        ss << "Из подготовленного на сайте \"Новой почты\" файла \"b.xml\""
+        ss << "Конфигурация: наличные, платит получатель."
+            << "\nИз подготовленного на сайте \"Новой почты\" файла \"b.xml\""
             << " и файла \"1.csv\" создаётся \"2.csv\" для импорта в Систему."
             << " Импортируйте \"2.csv\" в Систему, чтобы быстро связать номера заявок"
             << " \"Новой почты\" с заявками в Системе.";
@@ -221,9 +344,52 @@ struct FusionTTN : public DeliveryCommand {
         return "Есть неоформленные заявки.";
     }
 
+};
 
 
-    friend Delivery;
+
+
+/**
+* Слияние файла с информацией о заявках и файла с номерами заявок
+* от "Новой почты".
+* Используется конфигурация из "2-configure.json".
+*/
+struct FusionTTN2 : public FusionTTN {
+
+    inline FusionTTN2(
+    ) : FusionTTN( "2-configure.json" ) {
+    }
+
+
+    virtual inline std::string name() const {
+        return "Создать файл для быстрой связи заявок (безналичные, платит отправитель).";
+    }
+
+
+    virtual inline std::string hotkey() const {
+        return "4";
+    }
+
+
+    virtual inline std::string confirmation() const {
+        std::ostringstream ss;
+        ss << "Конфигурация: безналичные, платит отправитель."
+            << "\nИз подготовленного на сайте \"Новой почты\" файла \"b.xml\""
+            << " и файла \"1.csv\" создаётся \"2.csv\" для импорта в Систему."
+            << " Импортируйте \"2.csv\" в Систему, чтобы быстро связать номера заявок"
+            << " \"Новой почты\" с заявками в Системе.";
+        return ss.str();
+    }
+
+
+    virtual inline std::string success() const {
+        return "Все заявки оформлены.";
+    }
+
+    
+    virtual inline std::string failure() const {
+        return "Есть неоформленные заявки.";
+    }
 
 };
 

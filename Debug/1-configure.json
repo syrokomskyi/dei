@@ -1,0 +1,73 @@
+{
+"novaposhta": {
+
+  "oauth": "21555d6a3aadfaa0552d072de928dc9d",
+
+  "init-command": {
+
+    "create-ttn": {
+
+      "order_id": "",
+
+      "date": "",
+      "date_desired": "",
+
+      "sender_city": "Киев",
+      "sender_company": "ПП Глушко Д.М.",
+      "sender_address": "11",
+      "sender_contact": "Глушко Денис Миколайович",
+      "sender_phone": "0988671473",
+
+      "rcpt_city_name": "",
+      "rcpt_name": "",
+      "rcpt_warehouse": "",
+      "rcpt_street_name": "",
+      "rcpt_contact": "",
+      "rcpt_phone_num": "",
+
+      "pay_type": "1",
+      "payer": "0",
+      "cost": "400",
+
+      "payer_city": "",
+      "payer_company": "",
+
+      "additional_info": "ЗВОРОТНЯ ДОСТАВКА",
+
+      "documents": "",
+      "pack_type": "",
+      "description": "Документы",
+      "floor_count": "",
+      "saturday": "",
+
+      "delivery_amount": "",
+
+      "redelivery_type": "2",
+      "delivery_in_out": "",
+      "redelivery_payment_city": "",
+      "redelivery_payment_payer": "2",
+
+      "weight": "",
+      "length": "",
+      "width": "",
+      "height": "",
+      
+      "cont_description": "Документы"
+    }
+  },
+
+  "//*-*-delivery": "В файл для импорта к каждой заявке добавляется тип и сумма доставки.",
+  "door-door-delivery":   [ "Двери-Двери", "35" ],
+  "door-stock-delivery":  [ "Двери-Склад", "35" ],
+  "stock-door-delivery":  [ "Склад-Двери", "35" ],
+  "stock-stock-delivery": [ "Склад-Склад", "15" ],
+
+  "//ignore-item": "Вместо описания места будут оставлены значения полей 'description' и 'cont_description' по умолчанию.",
+  "ignore-item": true,
+
+  "//scream-door-note": "Когда в примечании встречается слова 'двер*' ('*' означает любой символ) к адресу доставки будет добавлена эта фраза.",
+  "scream-door-note": "СОЗВОНИТЬСЯ"
+
+}
+
+}

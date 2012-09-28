@@ -42,7 +42,7 @@ void dei::command::novaposhta::CreateTTN::run() {
     const std::string source = "data/1.csv";
     std::cout << "  > Загружаем данные из " << source << " ... ";
     ld.clear();
-    Delivery::load( ld, source );
+    Delivery::load( ld, source, configure );
     std::cout << "Порядок" << std::endl;
 
 
@@ -100,7 +100,7 @@ void dei::command::novaposhta::CreateTTN::run() {
 
 #if 0
 // - Новая почта не принимает документы по curl. Работаем через ручную вставку
-//   на их сайте, копированию ответа в файл плюс операция объединения номеров
+//   на их сайте: копируем ответ в файл плюс операция объединения номеров
 //   из 1.csv и ответа Новой почты с номерами заявок.
 
 #if 1
@@ -378,7 +378,7 @@ void dei::command::novaposhta::FusionTTN::run() {
     const std::string source = "data/1.csv";
     std::cout << "  > Загружаем данные из " << source << " ... ";
     ld.clear();
-    Delivery::load( ld, source );
+    Delivery::load( ld, source, configure );
     std::cout << "Порядок" << std::endl;
 
 
@@ -501,7 +501,7 @@ void dei::command::novaposhta::FusionTTN::run() {
                 }
 
                 // новые столбцы в файле появляются только когда значения
-                // типа / стоимости указаны в файле "configure.json"
+                // типа / стоимости указаны в файле "*-configure.json"
                 if ( !nameTD.empty() ) {
                     ss << ";" << nameTD;
                 }
@@ -681,13 +681,17 @@ std::ostream& std::operator<<( std::ostream& out, const dei::command::novaposhta
         ) );
 
 
-        order[ "payer_city" ] = d.city;
-        order[ "payer_company" ] = d.name;
+        const bool redelivery =
+            ( d.deliveryInOut.empty() && !d.redeliveryType.empty() );
+
+        order[ "payer_city" ] = redelivery ? d.city : "";
+        order[ "payer_company" ] = redelivery ? d.name : "";
 
         // к доп. инф. об отправлении добавляем кто оплачивает
-        order[ "additional_info" ] =
-            d.additionalInfo + " " + d.city + " " + d.name;
-
+        if ( !d.additionalInfo.empty() ) {
+            order[ "additional_info" ] =
+                d.additionalInfo + " " + d.city + " " + d.name;
+        }
 
         order[ "documents" ] = "";
         order[ "pack_type" ] = d.packType;
@@ -702,11 +706,15 @@ std::ostream& std::operator<<( std::ostream& out, const dei::command::novaposhta
         order[ "floor_count" ] = "0";
         order[ "saturday" ] = "0";
 
-        order[ "delivery_amount" ] = d.deliveryAmount;
+        // @todo Поле есть. Но оно не попадает в Новую почту. Считают сами?
+        std::ostringstream ss;
+        ss << (d.deliveryAmount.empty() ? "" : d.totalClear);
+        order[ "delivery_amount" ] = ss.str();
+
         order[ "redelivery_type" ] = d.redeliveryType;
 
         order[ "delivery_in_out" ] = d.deliveryInOut;
-        if ( d.deliveryInOut.empty() ) {
+        if ( redelivery ) {
             std::ostringstream ss;
             // # сумма здесь всегда целая
             //ss << "Документы Ц1П " << d.totalClear;
@@ -718,7 +726,12 @@ std::ostream& std::operator<<( std::ostream& out, const dei::command::novaposhta
             order[ "delivery_in_out" ] = ss.str();
         }
 
-        order[ "redelivery_payment_city" ] = d.city;
+        if ( redelivery ) {
+            order[ "redelivery_payment_city" ] =
+                d.redeliveryPaymentCity.empty() ? d.city : d.redeliveryPaymentCity;
+        } else {
+            order[ "redelivery_payment_city" ] = "";
+        }
         order[ "redelivery_payment_payer" ] = d.redeliveryPaymentPayer;
 
         order[ "weight" ] = d.weight;

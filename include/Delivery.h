@@ -29,6 +29,8 @@ namespace dei {
 
 /**
 * Доставка.
+*
+* @see http://orders.novaposhta.ua/api.php?todo=api_form
 */
 struct Delivery {
     // Данные получателя (загружаются из файла)
@@ -132,8 +134,8 @@ struct Delivery {
 
 
 
-    inline Delivery() {
-        initDefault( this, "configure.json" );
+    inline Delivery( const std::string& initFile ) {
+        initDefault( this, initFile );
     }
 
 
@@ -157,8 +159,14 @@ struct Delivery {
     /**
     * Загружает доставки из указанного файла в 'r'.
     * Пример файла - см. data/1.csv
+    *
+    * @param configure Файл конфигурации, с которым будет создана доставка.
     */
-    static void load( listDeliveryPtr_t& r, const std::string& source );
+    static void load(
+        listDeliveryPtr_t& r,
+        const std::string& source,
+        const std::string& configure
+    );
 
 
 
@@ -168,13 +176,18 @@ protected:
     /**
     * Наполняет доставку значениями по умолчанию.
     */
-    static void initDefault( Delivery* d, const std::string& initFile );
+    static void initDefault(
+        Delivery* d,
+        const std::string&  initFile
+    );
+
 
 
     /**
     * @return Поле, очищенное от крайних пробелов.
     */
     static std::string correctField( const std::string& s );
+
 
 
     /**

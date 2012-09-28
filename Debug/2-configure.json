@@ -1,5 +1,4 @@
 {
-
 "novaposhta": {
 
   "oauth": "21555d6a3aadfaa0552d072de928dc9d",
@@ -14,10 +13,10 @@
       "date_desired": "",
 
       "sender_city": "Киев",
-      "sender_company": "ПП Глушко Д.М.",
+      "sender_company": "СПД Кобзев А.М.",
       "sender_address": "11",
-      "sender_contact": "Глушко Денис Миколайович",
-      "sender_phone": "0988671473",
+      "sender_contact": "Кобзев А.М.",
+      "sender_phone": "0972943125",
 
       "rcpt_city_name": "",
       "rcpt_name": "",
@@ -26,14 +25,14 @@
       "rcpt_contact": "",
       "rcpt_phone_num": "",
 
-      "pay_type": "1",
-      "payer": "0",
+      "pay_type": "2",
+      "payer": "1",
       "cost": "400",
 
       "payer_city": "",
       "payer_company": "",
 
-      "additional_info": "ЗВОРОТНЯ ДОСТАВКА",
+      "additional_info": "",
 
       "documents": "",
       "pack_type": "",
@@ -41,12 +40,12 @@
       "floor_count": "",
       "saturday": "",
 
-      "delivery_amount": "",
+      "delivery_amount": "+",
 
-      "redelivery_type": "2",
+      "redelivery_type": "",
       "delivery_in_out": "",
       "redelivery_payment_city": "",
-      "redelivery_payment_payer": "2",
+      "redelivery_payment_payer": "",
 
       "weight": "",
       "length": "",
@@ -67,7 +66,7 @@
   "ignore-item": true,
 
   "//scream-door-note": "Когда в примечании встречается слова 'двер*' ('*' означает любой символ) к адресу доставки будет добавлена эта фраза.",
-  "scream-door-note": "СОЗВОНИТЬСЯ"
+  "scream-door-note": ""
 
 }
 

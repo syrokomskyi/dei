@@ -50,6 +50,7 @@
 #include <windows.h>
 
 
+#include <boost/assign.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/interval.hpp>
 
