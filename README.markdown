@@ -7,4 +7,4 @@
 
 
 
-![Delivery Export / Import](https://github.com/savdalion/dei/blob/master/doc/process-dei.png)
+![Delivery Export / Import](doc/process-dei.png)
