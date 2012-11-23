@@ -167,7 +167,7 @@ void dei::Delivery::initDefault(
     in.close();
 
 
-    // @todo fine Использовать парсер из typelib (сейчас нет удобного).
+    // @todo fine Использовать парсер из typelib.
 
     // @see external/cajun/test.cpp
     std::istringstream iss( str );
